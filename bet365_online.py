@@ -1,15 +1,9 @@
 import time
-from selenium import webdriver as wd
 from selenium.webdriver.support.ui import WebDriverWait as Wdw
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import (StaleElementReferenceException,
-                                        TimeoutException,
-                                        ElementClickInterceptedException,
-                                        NoSuchElementException)
-from bs4 import BeautifulSoup as Bs
-from selenium.webdriver.support.wait import WebDriverWait
+from valida_objeto import *
+
 
 def bet365_online(url_principal):
     # Opções para o Driver
@@ -27,8 +21,8 @@ def bet365_online(url_principal):
         # with wd.Chrome(options=options) as WdChrome:
 
         # Requisitando página ...
-        print('Requisitando página {} ...'.format(url_principal))
-        WdChrome.get(url_principal + '/#/IP/B1')
+        print(f'Requisitando página {url_principal} ...')
+        WdChrome.get(url_principal + '/#/HO/')
 
         # Aguardando renderização da página ...
         print('Aguardando renderização da página ...')
@@ -42,4 +36,18 @@ def bet365_online(url_principal):
         print('Maximizando drive ...')
         WdChrome.maximize_window()
 
-        time.sleep(30)
+        # Aceitando cookies
+        print('Aceitando cookies ...')
+        clica_objeto(WdChrome, wdw, (By.CLASS_NAME, 'ccm-CookieConsentPopup_Accept'))
+        print('... cookies aceitos.')
+
+        # Efetuando login
+        print('Efetuando login ...')
+        clica_objeto(WdChrome, wdw, (By.CLASS_NAME, 'hm-MainHeaderRHSLoggedOutMed_Login'))
+
+        """
+        clica_objeto(WdChrome, wdw, (By.CLASS_NAME, 'lms-StandardLogin_Username'))
+        print('... login efetuado.')
+        """
+
+        time.sleep(15)
